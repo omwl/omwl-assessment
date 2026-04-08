@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options Medical — Find Your Program</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --teal: #0B6E5B;
+  --teal-light: #E1F5EE;
+  --teal-mid: #1D9E75;
+  --teal-dark: #085041;
+  --orange: #E05C2A;
+  --orange-light: #FDF0EB;
+  --dark: #1A1F1E;
+  --mid: #3D4845;
+  --muted: #6B7876;
+  --border: #D8E4E2;
+  --bg: #F5F8F7;
+  --white: #FFFFFF;
+  --shadow: 0 2px 16px rgba(11,110,91,0.08);
+  --shadow-lg: 0 8px 40px rgba(11,110,91,0.14);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 18px; height: 18px; fill: white; }
+.logo-name { font-family: 'DM Serif Display', serif; font-size: 16px; letter-spacing: -0.01em; }
+.logo-tag { font-size: 10px; color: var(--muted); margin-top: -2px; letter-spacing: .04em; }
+.hdr-badge { font-size: 11px; font-weight: 500; color: var(--teal); background: var(--teal-light); padding: 4px 12px; border-radius: 99px; }
+
+/* ── Shell ── */
+main { max-width: 680px; margin: 0 auto; padding: 40px 20px 100px; }
+
+/* ── Welcome screen ── */
+#welcome { text-align: center; animation: up .35s ease; }
+.welcome-icon {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: var(--teal); margin: 0 auto 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+.welcome-icon svg { width: 36px; height: 36px; fill: white; }
+#welcome h1 { font-family: 'DM Serif Display', serif; font-size: 32px; letter-spacing: -.02em; margin-bottom: 12px; line-height: 1.2; }
+#welcome p { font-size: 15px; color: var(--muted); max-width: 380px; margin: 0 auto 32px; line-height: 1.6; }
+.welcome-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+.pill { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; background: var(--white); border: 1px solid var(--border); color: var(--mid); }
+.start-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal); color: white;
+  border: none; border-radius: 12px;
+  padding: 14px 32px; font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background .15s, transform .1s;
+  letter-spacing: -.01em;
+}
+.start-btn:hover { background: var(--teal-dark); }
+.start-btn:active { transform: scale(.98); }
+.start-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+/* ── Progress ── */
+.progress-wrap { margin-bottom: 28px; }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 12px; font-weight: 500; color: var(--teal); }
+.progress-count { font-size: 12px; color: var(--muted); }
+.progress-track { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width .4s ease; }
+
+/* ── Question card ── */
+#quiz { display: none; }
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  box-shadow: var(--shadow);
+  animation: up .28s ease;
+}
+@keyframes up { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.q-step-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600; color: var(--teal);
+  background: var(--teal-light); padding: 4px 12px; border-radius: 99px;
+  margin-bottom: 16px; letter-spacing: .04em; text-transform: uppercase;
+}
+.q-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; line-height: 1.3; letter-spacing: -.01em;
+  color: var(--dark); margin-bottom: 8px;
+}
+.q-hint { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+
+/* Options grid */
+.opts { display: grid; gap: 10px; }
+.opts.grid2 { grid-template-columns: 1fr 1fr; }
+.opts.grid1 { grid-template-columns: 1fr; }
+
+.opt {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  display: flex; align-items: flex-start; gap: 12px;
+  transition: border-color .15s, background .15s;
+  font-family: 'DM Sans', sans-serif;
+  width: 100%;
+}
+.opt:hover { border-color: var(--teal-mid); background: var(--teal-light); }
+.opt.selected { border-color: var(--teal); background: var(--teal-light); }
+.opt-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--white); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+  transition: background .15s, border-color .15s;
+}
+.opt.selected .opt-icon { background: var(--teal); border-color: var(--teal); filter: grayscale(1) brightness(10); }
+.opt-body {}
+.opt-title { font-size: 14px; font-weight: 600; color: var(--dark); line-height: 1.3; margin-bottom: 2px; }
+.opt-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+/* Nav */
+.q-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+.nav-back {
+  font-size: 13px; color: var(--muted); background: none;
+  border: 1px solid var(--border); border-radius: 9px;
+  padding: 8px 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all .15s;
+}
+.nav-back:hover { color: var(--dark); border-color: var(--mid); }
+.nav-next {
+  font-size: 14px; font-weight: 600; color: white;
+  background: var(--teal); border: none; border-radius: 10px;
+  padding: 10px 24px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background .15s, opacity .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-next:disabled { opacity: .35; cursor: not-allowed; }
+.nav-next:not(:disabled):hover { background: var(--teal-dark); }
+
+/* ── Result screen ── */
+#result { display: none; animation: up .35s ease; }
+
+.result-hero {
+  background: var(--teal);
+  border-radius: 20px;
+  padding: 32px 28px;
+  color: white;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.result-hero::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+}
+.result-hero::after {
+  content: '';
+  position: absolute; bottom: -60px; right: 40px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+}
+.result-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; opacity: .7; margin-bottom: 10px;
+}
+.result-plan-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px; letter-spacing: -.02em; margin-bottom: 8px; line-height: 1.2;
+}
+.result-tagline { font-size: 14px; opacity: .85; line-height: 1.5; max-width: 380px; margin-bottom: 24px; }
+.result-price-row { display: flex; align-items: baseline; gap: 6px; }
+.result-price { font-family: 'DM Serif Display', serif; font-size: 42px; letter-spacing: -.02em; }
+.result-price-unit { font-size: 15px; opacity: .75; }
+.result-saves { font-size: 12px; opacity: .7; margin-top: 4px; }
+
+/* Match score */
+.match-bar-wrap { margin: 20px 0 0; }
+.match-label { font-size: 12px; opacity: .8; margin-bottom: 6px; }
+.match-track { height: 6px; background: rgba(255,255,255,.2); border-radius: 99px; overflow: hidden; }
+.match-fill { height: 100%; background: white; border-radius: 99px; transition: width 1s ease .3s; width: 0; }
+
+/* Why card */
+.why-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 24px; margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.why-title { font-size: 13px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+.why-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--mid); padding: 5px 0;
+  border-bottom: 1px solid var(--bg); line-height: 1.5;
+}
+.why-row:last-child { border-bottom: none; }
+.why-check {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--teal-light); color: var(--teal);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+/* Includes */
+.includes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.inc-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12px; color: var(--mid); line-height: 1.4;
+}
+.inc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-mid); flex-shrink: 0; margin-top: 5px; }
+
+/* Pricing table */
+.pricing-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 24px; margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.pricing-title { font-size: 13px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+.ptable { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ptable th { text-align: left; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding: 0 0 8px; border-bottom: 1px solid var(--border); }
+.ptable td { padding: 9px 0; border-bottom: 1px solid var(--bg); color: var(--mid); vertical-align: middle; }
+.ptable tr:last-child td { border-bottom: none; }
+.ptable td:last-child { text-align: right; font-weight: 600; color: var(--dark); }
+.best-row td { color: var(--teal) !important; font-weight: 600; }
+.best-tag { font-size: 9px; font-weight: 600; background: var(--teal-light); color: var(--teal); padding: 2px 8px; border-radius: 99px; margin-left: 6px; letter-spacing: .04em; text-transform: uppercase; }
+
+/* Also consider */
+.also-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px 24px; margin-bottom: 14px;
+}
+.also-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+.also-plan {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--bg);
+}
+.also-plan:last-child { border-bottom: none; }
+.also-name { font-size: 13px; font-weight: 500; color: var(--dark); }
+.also-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.also-price { font-size: 15px; font-weight: 600; color: var(--dark); text-align: right; }
+.also-psub { font-size: 11px; color: var(--muted); }
+
+/* Addons flag */
+.addons-flag {
+  background: var(--orange-light); border: 1px solid #F5C4B3;
+  border-radius: 14px; padding: 16px 20px; margin-bottom: 14px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.addons-flag-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.addons-flag-title { font-size: 13px; font-weight: 600; color: var(--orange); margin-bottom: 4px; }
+.addons-flag-body { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+/* Actions */
+.result-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+.act-primary {
+  flex: 1; min-width: 160px;
+  background: var(--teal); color: white; border: none;
+  border-radius: 11px; padding: 13px 20px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: background .15s;
+}
+.act-primary:hover { background: var(--teal-dark); }
+.act-secondary {
+  background: var(--white); color: var(--mid);
+  border: 1px solid var(--border); border-radius: 11px;
+  padding: 13px 20px; font-size: 14px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all .15s;
+}
+.act-secondary:hover { border-color: var(--mid); color: var(--dark); }
+
+/* Footer */
+footer {
+  text-align: center; padding: 20px;
+  font-size: 11px; color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--white); margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .opts.grid2 { grid-template-columns: 1fr; }
+  .includes-grid { grid-template-columns: 1fr; }
+  .result-plan-name { font-size: 24px; }
+  .result-price { font-size: 34px; }
+  main { padding: 24px 14px 80px; }
+  .q-card { padding: 24px 18px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">Options Medical</div>
+      <div class="logo-tag">Weight Loss · Hormones · Longevity</div>
+    </div>
+  </div>
+  <div class="hdr-badge">Patient Assessment</div>
+</header>
+
+<main>
+
+  <!-- Welcome -->
+  <div id="welcome">
+    <div class="welcome-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 11.5A2.5 2.5 0 1 0 9 6.5a2.5 2.5 0 0 0 0 5zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2c0-2.33-4.67-3.5-7-3.5zm7.08-3.87A4.5 4.5 0 0 1 18 13.5c1.93 0 5 1 5 3V19h-5v-2c0-1.45-.68-2.53-1.73-3.32A6.97 6.97 0 0 0 16.08 9.63zm-.08 2.87a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+    </div>
+    <h1>Find your perfect program</h1>
+    <p>Answer 7 quick questions and we'll recommend the plan that fits your goals, health profile, and lifestyle.</p>
+    <div class="welcome-pills">
+      <span class="pill">⚖️ Weight loss</span>
+      <span class="pill">⚗️ Hormones</span>
+      <span class="pill">✦ Longevity</span>
+      <span class="pill">⏱ 2 minutes</span>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">
+      Begin assessment
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+    </button>
+    <div class="start-note">No personal information required</div>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-label" id="prog-label">Question 1 of 7</span>
+        <span class="progress-count" id="prog-count">14%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:14%"></div></div>
+    </div>
+    <div class="q-card" id="q-card"></div>
+  </div>
+
+  <!-- Result -->
+  <div id="result"></div>
+
+</main>
+
+<footer>
+  Options Medical Weight Loss &nbsp;·&nbsp; This assessment is for informational purposes. A medical provider will confirm your personalized program.
+</footer>
+
+<script>
+const questions = [
+  {
+    id: 'goal',
+    step: 'Your goal',
+    text: 'What brings you to Options Medical today?',
+    hint: 'Select the option that best describes your primary reason for visiting.',
+    layout: 'grid2',
+    opts: [
+      { id:'wl',   icon:'⚖️', title:'Lose weight',           desc:'GLP-1 medication & metabolic support' },
+      { id:'hr',   icon:'⚗️', title:'Hormone balance',        desc:'HRT or TRT to feel like myself again' },
+      { id:'both', icon:'✦',  title:'Weight loss + hormones', desc:'I want to address both together' },
+      { id:'long', icon:'✶',  title:'Longevity & wellness',   desc:'NAD+ or Glutathione therapy' },
+    ]
+  },
+  {
+    id: 'gender',
+    step: 'About you',
+    text: 'Which hormone program applies to you?',
+    hint: 'This helps us route you to the right HRT or TRT track.',
+    layout: 'grid2',
+    showIf: a => ['hr','both'].includes(a.goal),
+    opts: [
+      { id:'female', icon:'♀', title:'Female',             desc:'Hormone replacement therapy (HRT)' },
+      { id:'male',   icon:'♂', title:'Male',               desc:'Testosterone replacement therapy (TRT)' },
+      { id:'skip',   icon:'—', title:'Not applicable',     desc:'I\'m here for weight loss only' },
+    ]
+  },
+  {
+    id: 'weightGoal',
+    step: 'Weight goal',
+    text: 'How much weight are you looking to lose?',
+    hint: 'Give us your honest goal — there\'s no wrong answer.',
+    layout: 'grid1',
+    showIf: a => ['wl','both'].includes(a.goal),
+    opts: [
+      { id:'small',  icon:'🎯', title:'1–20 lbs',  desc:'A targeted, focused loss' },
+      { id:'medium', icon:'📈', title:'21–50 lbs', desc:'A meaningful transformation' },
+      { id:'large',  icon:'🏔️', title:'50+ lbs',   desc:'A major lifestyle change' },
+    ]
+  },
+  {
+    id: 'duration',
+    step: 'Your history',
+    text: 'How long have you been struggling with your weight or hormone symptoms?',
+    hint: 'Longer duration often benefits from a more comprehensive program.',
+    layout: 'grid1',
+    opts: [
+      { id:'new',  icon:'🌱', title:'Less than 1 year',  desc:'This is relatively new for me' },
+      { id:'mid',  icon:'📅', title:'1–5 years',         desc:'I\'ve been managing this for a while' },
+      { id:'long', icon:'🗓️', title:'5+ years',          desc:'This has been an ongoing challenge' },
+    ]
+  },
+  {
+    id: 'glp1Prior',
+    step: 'Medication history',
+    text: 'Have you tried GLP-1 medications (Ozempic, Wegovy, Mounjaro, Zepbound) before?',
+    hint: 'This helps us choose between Semaglutide and Tirzepatide.',
+    layout: 'grid1',
+    showIf: a => ['wl','both'].includes(a.goal),
+    opts: [
+      { id:'neverTried',   icon:'🆕', title:'No, never tried one',          desc:'This would be my first GLP-1' },
+      { id:'semaGood',     icon:'✅', title:'Yes — Semaglutide worked well', desc:'Ozempic / Wegovy with good results' },
+      { id:'semaLimited',  icon:'⚡', title:'Yes — limited results on Sema', desc:'I plateaued or didn\'t respond fully' },
+      { id:'tirzGood',     icon:'✅', title:'Yes — Tirzepatide worked well', desc:'Mounjaro / Zepbound with good results' },
+    ]
+  },
+  {
+    id: 'hormoneSymp',
+    step: 'Hormone check',
+    text: 'Are you experiencing any hormone-related symptoms?',
+    hint: 'Fatigue, mood changes, low libido, brain fog, hot flashes, low motivation.',
+    layout: 'grid1',
+    opts: [
+      { id:'several', icon:'🔴', title:'Yes — several symptoms',   desc:'It\'s significantly affecting my quality of life' },
+      { id:'few',     icon:'🟡', title:'A few mild symptoms',       desc:'I notice them but they\'re manageable' },
+      { id:'none',    icon:'🟢', title:'None that I\'m aware of',   desc:'My hormone levels feel normal' },
+    ]
+  },
+  {
+    id: 'support',
+    step: 'Support level',
+    text: 'How much ongoing support do you want from your care team?',
+    hint: 'Be honest — more support leads to better outcomes for most patients.',
+    layout: 'grid1',
+    opts: [
+      { id:'minimal',   icon:'🧭', title:'Self-sufficient',          desc:'I\'ll follow the plan independently, check in as needed' },
+      { id:'monthly',   icon:'📞', title:'Monthly check-ins',        desc:'Regular contact keeps me on track' },
+      { id:'unlimited', icon:'🤝', title:'Maximum support',          desc:'I want unlimited access to my care team' },
+    ]
+  },
+];
+
+const plans = {
+  'sema-essential': {
+    name: 'Essential Semaglutide',
+    tagline: 'The most popular entry point for GLP-1 weight loss, with monthly provider support and standard labs.',
+    price: 399, unit: '/mo',
+    badge: 'Most popular',
+    pricing: [
+      { label: 'Month-to-month', rate: '$399/mo', total: '—', best: false },
+      { label: '3 months prepay', rate: '$299/mo', total: '$897', best: false },
+      { label: '6 months prepay', rate: '$249/mo', total: '$1,494', best: true },
+      { label: '12 months prepay', rate: '$236/mo', total: '$2,832', best: false },
+    ],
+    includes: ['Monthly provider access','4-wk personalized semaglutide','InBody metabolic analysis','Standard labs','Monthly health coaching','10% nutrition shop discount'],
+  },
+  'tirz-essential': {
+    name: 'Essential Tirzepatide',
+    tagline: 'Tirzepatide targets two hunger hormones for stronger appetite control — ideal for patients who need more than semaglutide.',
+    price: 499, unit: '/mo',
+    badge: 'Most popular',
+    pricing: [
+      { label: 'Month-to-month', rate: '$499/mo', total: '—', best: false },
+      { label: '3 months prepay', rate: '$449/mo', total: '$1,347', best: false },
+      { label: '6 months prepay', rate: '$424/mo', total: '$2,544', best: true },
+      { label: '12 months prepay', rate: '$399/mo', total: '$4,788', best: false },
+    ],
+    includes: ['Monthly provider access','4-wk personalized tirzepatide','InBody metabolic analysis','Standard labs','Monthly health coaching','10% nutrition shop discount'],
+  },
+  'sema-complete': {
+    name: 'Complete Semaglutide',
+    tagline: 'Unlimited provider access, advanced labs, and full support for patients who want maximum results and accountability.',
+    price: 599, unit: '/mo',
+    badge: 'Best results',
+    pricing: [
+      { label: 'Month-to-month', rate: '$599/mo', total: '—', best: false },
+      { label: '3 months prepay', rate: '$509/mo', total: '$1,617', best: false },
+      { label: '6 months prepay', rate: '$479/mo', total: '$3,054', best: true },
+      { label: '12 months prepay', rate: '$539/mo', total: '$5,748', best: false },
+    ],
+    includes: ['Unlimited provider access','4-wk personalized semaglutide','InBody metabolic analysis','Advanced labs','Unlimited health coaching','20% nutrition shop discount','Supplemental support kit','4-wk lipotropic injections'],
+  },
+  'tirz-complete': {
+    name: 'Complete Tirzepatide',
+    tagline: 'The highest-performance weight loss program — dual-action GLP-1 with unlimited clinical support.',
+    price: 799, unit: '/mo',
+    badge: 'Best results',
+    pricing: [
+      { label: 'Month-to-month', rate: '$799/mo', total: '—', best: false },
+      { label: '3 months prepay', rate: '$679/mo', total: '$2,157', best: false },
+      { label: '6 months prepay', rate: '$639/mo', total: '$4,074', best: true },
+      { label: '12 months prepay', rate: '$719/mo', total: '$7,668', best: false },
+    ],
+    includes: ['Unlimited provider access','4-wk personalized tirzepatide','InBody metabolic analysis','Advanced labs','Unlimited health coaching','20% nutrition shop discount','Supplemental support kit','4-wk lipotropic injections'],
+  },
+  'support': {
+    name: 'Support Plan',
+    tagline: 'For patients who already have medication and need ongoing prescriptions, provider access, and standard labs.',
+    price: 149, unit: '/mo',
+    badge: 'Maintenance',
+    pricing: [
+      { label: 'Month-to-month', rate: '$149/mo', total: '—', best: false },
+      { label: '3 months prepay', rate: '$134/mo', total: '$402', best: false },
+      { label: '6 months prepay', rate: '$127/mo', total: '$762', best: true },
+      { label: '12 months prepay', rate: '$119/mo', total: '$1,428', best: false },
+    ],
+    includes: ['Monthly provider access','Monthly personalized prescription*','Standard labs','Monthly health coaching'],
+    note: '*Medication cost not included.'
+  },
+  'hrt-essential': {
+    name: 'Essential HRT',
+    tagline: 'Personalized hormone replacement therapy for women, with monthly provider support and hormone optimization labs.',
+    price: 399, unit: '/mo',
+    badge: 'Most popular',
+    pricing: [
+      { label: 'Month-to-month', rate: '$399/mo', total: '—', best: false },
+      { label: '6 months prepay', rate: '$375/mo', total: '$2,250', best: true },
+      { label: '12 months prepay', rate: '$299/mo', total: '$3,588', best: false },
+    ],
+    includes: ['Monthly provider access','Personalized HRT medication','InBody metabolic analysis','Hormone optimization labs','10% nutrition shop discount'],
+  },
+  'hrt-complete': {
+    name: 'Complete HRT',
+    tagline: 'Unlimited access, advanced hormone labs, and comprehensive support for women who want full optimization.',
+    price: 499, unit: '/mo',
+    badge: 'Best results',
+    pricing: [
+      { label: 'Month-to-month', rate: '$499/mo', total: '—', best: false },
+      { label: '6 months prepay', rate: '$475/mo', total: '$2,850', best: true },
+      { label: '12 months prepay', rate: '$399/mo', total: '$4,788', best: false },
+    ],
+    includes: ['Unlimited provider access','Personalized HRT medication','InBody metabolic analysis','Advanced hormone labs','20% nutrition shop discount','Supplemental support kit','4-wk lipotropic injections'],
+  },
+  'trt-essential': {
+    name: 'Essential TRT',
+    tagline: 'Testosterone replacement therapy for men with monthly provider check-ins and hormone optimization labs.',
+    price: 249, unit: '/mo',
+    badge: 'Most popular',
+    pricing: [
+      { label: '3 months', rate: '$249/mo', total: '$747', best: false },
+      { label: '6 months prepay', rate: '$224/mo', total: '$1,344', best: true },
+      { label: '9 months prepay', rate: '$212/mo', total: '$1,908', best: false },
+      { label: '12 months prepay', rate: '$199/mo', total: '$2,388', best: false },
+    ],
+    includes: ['Monthly provider access','Personalized TRT medication','InBody metabolic analysis','Hormone optimization labs','10% nutrition shop discount','Monthly health coaching'],
+  },
+  'trt-complete': {
+    name: 'Complete TRT',
+    tagline: 'Unlimited access and advanced labs for men who want full testosterone optimization with maximum support.',
+    price: 399, unit: '/mo',
+    badge: 'Best results',
+    pricing: [
+      { label: '3 months', rate: '$399/mo', total: '$1,197', best: false },
+      { label: '6 months prepay', rate: '$359/mo', total: '$2,154', best: true },
+      { label: '9 months prepay', rate: '$339/mo', total: '$3,051', best: false },
+      { label: '12 months prepay', rate: '$319/mo', total: '$3,828', best: false },
+    ],
+    includes: ['Unlimited provider access','Personalized TRT medication','InBody metabolic analysis','Advanced hormone labs','20% nutrition shop discount','Unlimited health coaching','Supplemental support kit','4-wk lipotropic injections'],
+  },
+  'bundle-sema': {
+    name: 'Semaglutide + HRT Bundle',
+    tagline: 'Weight loss and hormone support in one seamless program — the most efficient path to full-body transformation.',
+    price: 498, unit: '/mo',
+    badge: 'Bundle',
+    pricing: [
+      { label: '3 months', rate: '$498/mo', total: '$1,494', best: false },
+      { label: '6 months prepay', rate: '$448/mo', total: '$2,688', best: true },
+      { label: '12 months prepay', rate: '$435/mo', total: '$5,220', best: false },
+    ],
+    includes: ['Monthly provider exams','Personalized semaglutide injections','Personalized HRT medication','InBody metabolic analysis','Standard + HRT labs','Monthly health coaching','10% nutrition shop discount'],
+  },
+  'bundle-tirz': {
+    name: 'Tirzepatide + HRT Bundle',
+    tagline: 'The most powerful weight loss medication combined with personalized hormone support.',
+    price: 648, unit: '/mo',
+    badge: 'Bundle',
+    pricing: [
+      { label: '3 months', rate: '$648/mo', total: '$1,944', best: false },
+      { label: '6 months prepay', rate: '$623/mo', total: '$3,738', best: true },
+      { label: '12 months prepay', rate: '$598/mo', total: '$7,176', best: false },
+    ],
+    includes: ['Monthly provider exams','Personalized tirzepatide injections','Personalized HRT medication','InBody metabolic analysis','Standard + HRT labs','Monthly health coaching','10% nutrition shop discount'],
+  },
+  'nad': {
+    name: 'NAD+ Injections',
+    tagline: 'Boost cellular energy, support repair, and slow the effects of aging with monthly NAD+ therapy.',
+    price: 199, unit: '/mo',
+    badge: 'Longevity',
+    pricing: [
+      { label: 'Stand-alone membership', rate: '$199/mo', total: '—', best: false },
+      { label: 'Existing member add-on', rate: '$149/mo', total: '—', best: true },
+    ],
+    includes: ['NAD+ injections (monthly supply)','NAD+ medical review','Shipping included'],
+  },
+  'glut': {
+    name: 'Glutathione Injections',
+    tagline: 'Powerful antioxidant support for immune health, detoxification, and overall cellular wellness.',
+    price: 179, unit: '/mo',
+    badge: 'Longevity',
+    pricing: [
+      { label: 'Stand-alone membership', rate: '$179/mo', total: '—', best: false },
+      { label: 'Existing member add-on', rate: '$129/mo', total: '—', best: true },
+    ],
+    includes: ['Glutathione injections (monthly supply)','Glutathione medical review','Shipping included','CMP panel if required'],
+  },
+};
+
+// ── Scoring engine ──
+function recommend(a) {
+  // Longevity fast path
+  if (a.goal === 'long') {
+    return { primary: 'nad', secondary: ['glut'], score: 95, reasons: ['You selected longevity and wellness as your primary goal','NAD+ supports cellular energy, repair, and healthy aging','Glutathione is a powerful complement for antioxidant and immune support'], addonsFlag: null };
+  }
+
+  let med = 'sema'; // default medication
+  let tier = 'essential'; // default tier
+  const reasons = [];
+  const addons = [];
+  let score = 78;
+
+  // ── Medication choice (sema vs tirz) ──
+  if (a.glp1Prior === 'semaLimited') { med = 'tirz'; reasons.push('You had limited results on semaglutide — tirzepatide targets two hunger hormones for stronger response'); score += 5; }
+  else if (a.glp1Prior === 'tirzGood') { med = 'tirz'; reasons.push('You\'ve responded well to tirzepatide previously'); score += 5; }
+  else if (a.glp1Prior === 'semaGood') { med = 'sema'; reasons.push('You\'ve responded well to semaglutide — we\'ll stay the course'); score += 5; }
+  else if (a.glp1Prior === 'neverTried') { med = 'sema'; reasons.push('Semaglutide is the standard first-line GLP-1 for new patients'); score += 3; }
+
+  // ── Tier choice (essential vs complete) ──
+  if (a.support === 'unlimited') { tier = 'complete'; reasons.push('You want maximum support — the Complete plan gives you unlimited provider and coaching access'); score += 8; }
+  else if (a.support === 'monthly') { tier = 'essential'; reasons.push('Monthly check-ins are built into the Essential plan'); score += 5; }
+  else { tier = 'essential'; reasons.push('The Essential plan gives you structured support without overcommitting'); }
+
+  if (a.duration === 'long') { if (tier !== 'complete') { tier = 'complete'; reasons.push('5+ years of struggle benefits from the comprehensive support of the Complete plan'); score += 5; } }
+  if (a.weightGoal === 'large') { if (tier !== 'complete') { tier = 'complete'; reasons.push('A 50+ lb goal is best supported by the Complete plan\'s advanced labs and unlimited coaching'); score += 5; } }
+
+  // ── Hormone routing ──
+  if (a.goal === 'hr' || a.goal === 'both') {
+    const gender = a.gender || 'female';
+    if (a.goal === 'hr') {
+      // Hormones only
+      if (gender === 'male') {
+        const t = (a.support === 'unlimited' || a.duration === 'long') ? 'trt-complete' : 'trt-essential';
+        const secondary = t === 'trt-essential' ? ['trt-complete'] : ['trt-essential'];
+        if (!reasons.length) reasons.push('You selected hormone balance as your primary goal');
+        if (gender === 'male') reasons.push('TRT is the appropriate program for male hormone optimization');
+        if (a.hormoneSymp === 'several') { reasons.push('Multiple hormone symptoms indicate a higher support level may benefit you'); score += 5; }
+        return { primary: t, secondary, score: Math.min(score, 97), reasons, addonsFlag: null };
+      } else {
+        const t = (a.support === 'unlimited' || a.duration === 'long') ? 'hrt-complete' : 'hrt-essential';
+        const secondary = t === 'hrt-essential' ? ['hrt-complete'] : ['hrt-essential'];
+        if (!reasons.length) reasons.push('You selected hormone balance as your primary goal');
+        reasons.push('HRT is the appropriate program for female hormone optimization');
+        if (a.hormoneSymp === 'several') { reasons.push('Multiple hormone symptoms indicate higher support will accelerate your results'); score += 5; }
+        return { primary: t, secondary, score: Math.min(score, 97), reasons, addonsFlag: null };
+      }
+    }
+    // Both — bundle
+    const bmed = med; // already scored above
+    const bundleKey = bmed === 'tirz' ? 'bundle-tirz' : 'bundle-sema';
+    const altBundle = bmed === 'tirz' ? 'bundle-sema' : 'bundle-tirz';
+    reasons.push('You want to address both weight loss and hormones — the bundle covers both in one plan');
+    if (a.hormoneSymp === 'several') reasons.push('Multiple hormone symptoms confirm hormone support belongs in your program');
+    return { primary: bundleKey, secondary: [altBundle], score: Math.min(score+6,97), reasons, addonsFlag: null };
+  }
+
+  // ── Pure weight loss ──
+  if (!reasons.find(r => r.includes('GLP-1') || r.includes('sema') || r.includes('tirz') || r.includes('first-line'))) {
+    reasons.push(`${med === 'tirz' ? 'Tirzepatide' : 'Semaglutide'} is the right medication match based on your history`);
+  }
+
+  // Hormone add-on flag
+  let addonsFlag = null;
+  if (a.hormoneSymp === 'several') {
+    addonsFlag = { title: 'Hormone symptoms detected', body: 'You reported several hormone-related symptoms. Ask your provider about adding an HRT or TRT add-on to your weight loss plan for a more complete program.' };
+  } else if (a.hormoneSymp === 'few') {
+    addonsFlag = { title: 'Mild hormone symptoms noted', body: 'A few symptoms were flagged. Your provider can run hormone labs at your first visit to determine if an add-on is appropriate.' };
+  }
+
+  const primaryKey = `${med}-${tier}`;
+  const secondaryKeys = [];
+  if (tier === 'essential') secondaryKeys.push(`${med}-complete`);
+  if (tier === 'complete') secondaryKeys.push(`${med}-essential`);
+  const altMed = med === 'sema' ? 'tirz' : 'sema';
+  secondaryKeys.push(`${altMed}-${tier}`);
+
+  return { primary: primaryKey, secondary: secondaryKeys.slice(0,2), score: Math.min(score, 97), reasons, addonsFlag };
+}
+
+// ── State ──
+let answers = {};
+let currentQ = 0;
+let visibleQs = [];
+
+function getVisibleQuestions() {
+  return questions.filter(q => !q.showIf || q.showIf(answers));
+}
+
+function startQuiz() {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  visibleQs = getVisibleQuestions();
+  currentQ = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  visibleQs = getVisibleQuestions();
+  const q = visibleQs[currentQ];
+  const total = visibleQs.length;
+  const pct = Math.round(((currentQ) / total) * 100);
+
+  document.getElementById('prog-label').textContent = `Question ${currentQ+1} of ${total}`;
+  document.getElementById('prog-count').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const card = document.getElementById('q-card');
+  card.innerHTML = '';
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'up .28s ease';
+
+  // Badge
+  const badge = document.createElement('div');
+  badge.className = 'q-step-badge';
+  badge.textContent = q.step;
+  card.appendChild(badge);
+
+  // Question
+  const qText = document.createElement('div');
+  qText.className = 'q-text';
+  qText.textContent = q.text;
+  card.appendChild(qText);
+
+  const hint = document.createElement('div');
+  hint.className = 'q-hint';
+  hint.textContent = q.hint;
+  card.appendChild(hint);
+
+  // Options
+  const opts = document.createElement('div');
+  opts.className = 'opts ' + q.layout;
+  q.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt' + (answers[q.id] === opt.id ? ' selected' : '');
+    btn.innerHTML = `<div class="opt-icon">${opt.icon}</div><div class="opt-body"><div class="opt-title">${opt.title}</div><div class="opt-desc">${opt.desc}</div></div>`;
+    btn.onclick = () => {
+      answers[q.id] = opt.id;
+      opts.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      nextBtn.disabled = false;
+    };
+    opts.appendChild(btn);
+  });
+  card.appendChild(opts);
+
+  // Nav
+  const nav = document.createElement('div');
+  nav.className = 'q-nav';
+
+  const backBtn = document.createElement('button');
+  backBtn.className = 'nav-back';
+  backBtn.textContent = currentQ === 0 ? '↩ Start over' : '← Back';
+  backBtn.onclick = () => {
+    if (currentQ === 0) { answers = {}; document.getElementById('quiz').style.display='none'; document.getElementById('welcome').style.display=''; }
+    else { currentQ--; visibleQs = getVisibleQuestions(); renderQuestion(); }
+  };
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'nav-next';
+  nextBtn.disabled = !answers[q.id];
+  const isLast = currentQ === visibleQs.length - 1;
+  nextBtn.innerHTML = isLast ? 'See my recommendation <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>' : 'Next <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>';
+  nextBtn.onclick = () => {
+    visibleQs = getVisibleQuestions();
+    if (currentQ < visibleQs.length - 1) { currentQ++; renderQuestion(); }
+    else { showResult(); }
+  };
+
+  nav.appendChild(backBtn);
+  nav.appendChild(nextBtn);
+  card.appendChild(nav);
+}
+
+function showResult() {
+  document.getElementById('quiz').style.display = 'none';
+  const resultEl = document.getElementById('result');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = '';
+
+  const rec = recommend(answers);
+  const plan = plans[rec.primary];
+
+  // Hero
+  const hero = document.createElement('div');
+  hero.className = 'result-hero';
+  hero.innerHTML = `
+    <div class="result-eyebrow">Your personalized recommendation</div>
+    <div class="result-plan-name">${plan.name}</div>
+    <div class="result-tagline">${plan.tagline}</div>
+    <div class="result-price-row">
+      <span class="result-price">$${plan.price}</span>
+      <span class="result-price-unit">${plan.unit}</span>
+    </div>
+    <div class="result-saves">${plan.badge} plan</div>
+    <div class="match-bar-wrap">
+      <div class="match-label">Program match score</div>
+      <div class="match-track"><div class="match-fill" id="match-fill"></div></div>
+    </div>`;
+  resultEl.appendChild(hero);
+  setTimeout(() => { const f = document.getElementById('match-fill'); if(f) f.style.width = rec.score+'%'; }, 100);
+
+  // Match label text
+  const matchPct = document.createElement('div');
+  matchPct.style.cssText = 'font-size:12px;color:var(--muted);text-align:right;margin-top:4px;';
+  matchPct.textContent = rec.score + '% match based on your answers';
+  resultEl.appendChild(matchPct);
+
+  // Why this plan
+  const why = document.createElement('div');
+  why.className = 'why-card';
+  why.innerHTML = `<div class="why-title">Why this plan fits you</div>`;
+  rec.reasons.forEach(r => {
+    why.innerHTML += `<div class="why-row"><div class="why-check">✓</div><span>${r}</span></div>`;
+  });
+  resultEl.appendChild(why);
+
+  // What's included
+  const incCard = document.createElement('div');
+  incCard.className = 'why-card';
+  incCard.innerHTML = `<div class="why-title">What's included every month</div><div class="includes-grid">${plan.includes.map(i => `<div class="inc-item"><div class="inc-dot"></div><span>${i}</span></div>`).join('')}</div>`;
+  if (plan.note) incCard.innerHTML += `<div style="font-size:11px;color:var(--muted);margin-top:12px;font-style:italic">${plan.note}</div>`;
+  resultEl.appendChild(incCard);
+
+  // Pricing
+  const pricingCard = document.createElement('div');
+  pricingCard.className = 'pricing-card';
+  pricingCard.innerHTML = `<div class="pricing-title">Pricing options — prepay & save</div>
+    <table class="ptable">
+      <thead><tr><th>Term</th><th>Monthly rate</th><th>Total</th></tr></thead>
+      <tbody>${plan.pricing.map(r => `<tr class="${r.best?'best-row':''}"><td>${r.label}${r.best?'<span class="best-tag">Best value</span>':''}</td><td>${r.rate}</td><td>${r.total}</td></tr>`).join('')}</tbody>
+    </table>`;
+  resultEl.appendChild(pricingCard);
+
+  // Hormone flag
+  if (rec.addonsFlag) {
+    const flag = document.createElement('div');
+    flag.className = 'addons-flag';
+    flag.innerHTML = `<div class="addons-flag-icon">⚗️</div><div><div class="addons-flag-title">${rec.addonsFlag.title}</div><div class="addons-flag-body">${rec.addonsFlag.body}</div></div>`;
+    resultEl.appendChild(flag);
+  }
+
+  // Also consider
+  if (rec.secondary && rec.secondary.length) {
+    const also = document.createElement('div');
+    also.className = 'also-card';
+    also.innerHTML = `<div class="also-title">Also consider</div>`;
+    rec.secondary.forEach(sk => {
+      const sp = plans[sk];
+      if (!sp) return;
+      also.innerHTML += `<div class="also-plan"><div><div class="also-name">${sp.name}</div><div class="also-sub">${sp.tagline.substring(0,70)}…</div></div><div><div class="also-price">$${sp.price}<span style="font-size:11px;font-weight:400;color:var(--muted)">/mo</span></div><div class="also-psub">${sp.badge}</div></div></div>`;
+    });
+    resultEl.appendChild(also);
+  }
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'result-actions';
+  actions.innerHTML = `<button class="act-primary" onclick="window.print()">Print / Save results</button><button class="act-secondary" onclick="retake()">↩ Retake assessment</button>`;
+  resultEl.appendChild(actions);
+}
+
+function retake() {
+  answers = {};
+  currentQ = 0;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('result').innerHTML = '';
+  document.getElementById('welcome').style.display = '';
+}
+</script>
+</body>
+</html>
